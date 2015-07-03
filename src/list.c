@@ -215,8 +215,7 @@ void* back(list* llist)
  */
 int size(list* llist)
 {
-	///@note simply return the size of the linked list.  Its that easy!
-	return 0;
+	return llist->size;
 }
 
 /** traverse
@@ -228,7 +227,12 @@ int size(list* llist)
  */
 void traverse(list* llist, list_op do_func)
 {
-	/// @todo Implement
+	node* tmp = llist->tail;
+	while(tmp != NULL)
+	{
+		do_func(tmp->data);
+		tmp = tmp->next;
+	}
 }
 
 /** remove_if
