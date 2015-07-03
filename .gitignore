@@ -1,0 +1,8 @@
+# Ignore the following directories
+# matches "<dir_name>" in any subfolder
+build/		# Ignore build files
+lib/		# Ignore library files
+bin/ 		# Ignore any executables
+
+# ignore all files ending with ~
+*~
