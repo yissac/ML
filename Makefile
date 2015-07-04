@@ -13,7 +13,8 @@ HDREXT 		= h
 #######################################
 
 MAKEFILE 	= Makefile
-CFLAGS 		= -Wall -Werror -std=c99 -pedantic
+#CFLAGS 		= -Wall -Werror -std=c99 -pedantic
+CFLAGS 		= -std=c99
 CDEBUG 		= -ggdb -DDEBUG
 CRELEASE 	= -O3
 
@@ -44,7 +45,10 @@ $(PROGNAME) : $(OBJS)
 $(OBJECTS_DIR)/%.o : $(SOURCES_DIR)/%.$(SRCEXT)
 	$(CC) $(CFLAGS) $(CRELEASE) -I$(HEADERS_DIR) -c -o $@ $<
 
-.PHONY : clean srcfiles
+.PHONY : debug clean srcfiles
+
+debug : CFLAGS += $(CDEBUG)
+debug: $(PROGNAME)
 
 clean :
 	rm $(PROGNAME) $(OBJS)

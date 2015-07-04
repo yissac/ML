@@ -227,7 +227,7 @@ int size(list* llist)
  */
 void traverse(list* llist, list_op do_func)
 {
-	node* tmp = llist->tail;
+	node* tmp = llist->head;
 	while(tmp != NULL)
 	{
 		do_func(tmp->data);
