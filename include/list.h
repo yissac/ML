@@ -39,5 +39,6 @@ void empty_list(list* llist, list_op free_func);
 
 /* Traversal */
 void traverse(list* llist, list_op do_func);
+void traverse_skip(list* llist, list_op do_func, int step);
 
 #endif

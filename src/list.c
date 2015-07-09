@@ -71,6 +71,7 @@ void push_front(list* llist, void* data)
 	{
 		// list is not empty
 		n->next = llist->head;
+		llist->head->prev = n;
 		llist->head = n;
 	}
 	else
@@ -102,6 +103,7 @@ void push_back(list* llist, void* data)
 	{
 		// list is not empty
 		n->prev = llist->tail;
+		llist->tail->next = n;
 		llist->tail = n;
 	}
 	else
@@ -187,9 +189,10 @@ list* copy_list(list* llist, list_cpy copy_func)
  */
 void* front(list* llist)
 {
-	/// @todo Implement changing the return value!
-	/// @note you are returning the HEAD's DATA not the head node. Remember the user should never deal with the linked list nodes.
-	return NULL;
+	if (is_empty(llist))
+		return NULL;
+	else
+		return llist->head->data;
 }
 
 /** back
@@ -202,8 +205,10 @@ void* front(list* llist)
  */
 void* back(list* llist)
 {
-	/// @todo Implement changing the return value!
-	return NULL;
+	if (is_empty(llist))
+		return NULL;
+	else
+		return llist->tail->data;
 }
 
 /** size
@@ -235,6 +240,22 @@ void traverse(list* llist, list_op do_func)
 	}
 }
 
+void traverse_skip(list* llist, list_op do_func, int step)
+{
+	int i = step;
+	node* tmp = llist->head;
+	while(tmp != NULL)
+	{
+		if (i == step)
+		{
+			do_func(tmp->data);
+			i=0;
+		}
+		tmp = tmp->next;
+		i++;
+	}
+}
+
 /** remove_if
  *
  * Removes all nodes whose data when passed into the predicate function returns true
@@ -262,8 +283,10 @@ int remove_if(list* llist, list_pred pred_func, list_op free_func)
  */
 int is_empty(list* llist)
 {
-	///@note an empty list by the way we want you to implement it has a size of zero and head points to NULL.
-	return 0;
+	if (llist->size == 0 && llist->head == NULL)
+		return 1;
+	else
+		return 0;
 }
 
 /** empty_list
@@ -276,7 +299,15 @@ int is_empty(list* llist)
  */
 void empty_list(list* llist, list_op free_func)
 {
-	/// @todo Implement
-	/// @note Free all of the nodes not the linked list itself.
-	/// @note do not free llist.
+	node* tmp = llist->head;
+	node* tmp2;
+	while(tmp != NULL)
+	{
+		tmp2 = tmp->next;
+		free_func(tmp->data);
+		free(tmp);
+		tmp = tmp2;
+	}
+	llist->head = NULL;
+	llist->tail = NULL;
 }
